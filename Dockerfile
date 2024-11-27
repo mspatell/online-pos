@@ -13,11 +13,8 @@ RUN yarn install
 # Copy the rest of the application code
 COPY . .
 
-# Install json-server as a dependency
-RUN yarn add json-server
-
 # Expose ports used by json-server and the app
-EXPOSE 5000 3000
+EXPOSE 8000 3000
 
 # Define environment variables if needed (e.g., NODE_ENV)
 ENV NODE_ENV production
