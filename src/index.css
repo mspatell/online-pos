@@ -29,39 +29,3 @@ code {
   max-height: 100px;
   object-fit: cover;
 }
-
-/* Print-specific styles */
-@media print {
-  body * {
-    visibility: hidden;
-  }
-
-  .p-5, .table {
-    visibility: visible;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background-color: white;
-    color: black;
-  }
-
-  /* Styles for printed receipt table */
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .table th, .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-  .table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-  }
-}
