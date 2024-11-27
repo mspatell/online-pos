@@ -7,8 +7,8 @@ import "../components/print/style/print.css";
 export const ComponentToPrint = forwardRef(({ cart, totalAmount, businessInfo }, ref) => {
 
   const defaultBusinessInfo = {
-    name: "My POS Store",
-    address: "123 Business Street",
+    name: "Your Cloud POS",
+    address: "123 Your Business Location",
     phone: "(555) 123-4567"
   };
 
