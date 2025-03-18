@@ -1,6 +1,20 @@
 import React from 'react';
 
 export const Cart = ({ cart, totalAmount, onRemoveProduct, onPrint }) => {
+  const calculateTotalWithTax = (amount) => {
+    const taxRate = amount <= 4.0 ? 0.05 : 0.13;
+    const taxAmount = amount * taxRate;
+    const finalTotal = amount + taxAmount;
+    
+    return {
+      subtotal: amount,
+      tax: taxAmount,
+      finalTotal: finalTotal
+    };
+  };
+
+  const { subtotal, tax, finalTotal } = calculateTotalWithTax(totalAmount);
+
   return (
     <div className="col-lg-4">
       <div className="table-responsive bg-dark">
@@ -35,7 +49,11 @@ export const Cart = ({ cart, totalAmount, onRemoveProduct, onPrint }) => {
             ))}
           </tbody>
         </table>
-        <h2 className="px-2 text-white">Total Amount: ${totalAmount}</h2>
+        <div className="px-2 text-white">
+          <h3>Subtotal: ${subtotal.toFixed(2)}</h3>
+          <h3>Tax ({subtotal <= 4.0 ? '5%' : '13%'}): ${tax.toFixed(2)}</h3>
+          <h2>Final Total: ${finalTotal.toFixed(2)}</h2>
+        </div>
       </div>
       <div className="mt-3">
         {totalAmount !== 0 ? (
