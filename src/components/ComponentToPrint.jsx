@@ -4,7 +4,7 @@ import { PrintableTable } from "./print/Printable";
 import { PrintableFooter } from "./print/Printable";
 import "../components/print/style/print.css";
 
-export const ComponentToPrint = forwardRef(({ cart, totalAmount, businessInfo }, ref) => {
+export const ComponentToPrint = forwardRef(({ cart, subtotal, tax, finalTotal, businessInfo }, ref) => {
 
   const defaultBusinessInfo = {
     name: "Your Cloud POS",
@@ -41,8 +41,14 @@ export const ComponentToPrint = forwardRef(({ cart, totalAmount, businessInfo },
       <PrintableTable items={cart} />
       )}
 
+      {/* Display Subtotal, Tax, and Final Total */}
+      <div className="summary-section">
+        <h3>Subtotal: ${subtotal}</h3>
+        <h3>Tax: ${tax}</h3>
+        <h2>Final Total: ${finalTotal}</h2>
+      </div>
+
       <PrintableFooter 
-        totalAmount={totalAmount}
         additionalInfo={additionalInfo}
       />
     </div>
