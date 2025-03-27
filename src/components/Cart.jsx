@@ -18,7 +18,7 @@ export const Cart = ({ cart, totalAmount, onRemoveProduct, onAddProduct, onPrint
   const { subtotal, tax, finalTotal } = calculateTotalWithTax(totalAmount);
 
   return (
-    <div className="col-lg-5">
+    <div className="col-lg-6">
       <div className="table-responsive bg-dark">
         <table className="table table-responsive table-dark table-hover">
           <thead>
@@ -77,11 +77,24 @@ export const Cart = ({ cart, totalAmount, onRemoveProduct, onAddProduct, onPrint
           "Please add a product to the cart"
         )}
       </div>
+      {cart.length > 0 && (
+        <div className="mt-3">
+          <button 
+            className="btn btn-danger" 
+            onClick={() => window.location.reload()}
+          >
+            Clear Cart
+          </button>
+          <button className="btn btn-success" onClick={() => window.location.href = '/order-queue'}>
+    Place Order
+  </button>
+        </div>
+      )}      
 
       {/* Pass calculated totals to ComponentToPrint for printing */}
       <ComponentToPrint
         cart={cart}
-        // totalAmount={totalAmount}
+        totalAmount={totalAmount}
         subtotal={subtotal}
         tax={tax}
         finalTotal={finalTotal}

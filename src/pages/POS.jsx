@@ -45,7 +45,7 @@ function POS() {
   return (
     <MainLayout>
       <div className="row">
-        <div className="col-lg-8">
+        <div className="col-lg-6 col-md-12">
           {isLoading ? (
             "Loading"
           ) : (
