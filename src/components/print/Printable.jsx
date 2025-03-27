@@ -42,7 +42,7 @@ export const PrintableTable = ({ items }) => {
 export const PrintableFooter = ({ totalAmount, additionalInfo }) => {
   return (
     <div className="print-footer">
-      <h2 className="px-2">Total Amount: ${totalAmount}</h2>
+      {/* <h2 className="px-2">Total Amount: ${totalAmount}</h2> */}
       {additionalInfo && (
         <div className="additional-info">
           <p>{additionalInfo.message}</p>
