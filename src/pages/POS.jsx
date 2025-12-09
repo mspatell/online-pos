@@ -10,7 +10,7 @@ import { useCart } from "../hooks/useCart";
 import { useProducts } from "../hooks/useProducts";
 
 function POS() {
-  const { products, isLoading } = useProducts();
+  const { products, isLoading, error } = useProducts();
   const { cart, totalAmount, addProductToCart, removeProduct } = useCart();
   const componentRef = useRef(null);
 
@@ -48,6 +48,12 @@ function POS() {
         <div className="col-lg-6 col-md-12">
           {isLoading ? (
             "Loading"
+          ) : error ? (
+            <div className="alert alert-warning" role="alert">
+              <h4 className="alert-heading">Server Not Running</h4>
+              <p>You'll need to start the server for this. Use Docker file:</p>
+              <code>docker-compose up --build</code>
+            </div>
           ) : (
             <ProductList products={products} onProductClick={addProductToCart} />
           )}
