@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # React app
-      - "8000:8000" # json-server
+      - "3001:3000" # React-app-port : container-port for frontend
+      - "8001:8000" # json-server-port : container-port for backend
     volumes:
       - .:/usr/src/app
     environment:
