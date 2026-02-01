@@ -3,7 +3,7 @@ import React from 'react';
 export const ProductList = ({ products, onProductClick }) => {
   return (
     <div className="row">
-      {products.map((product, key) => (
+      {Array.isArray(products) && products.map((product, key) => (
         <div key={key} className="col-lg-4 mb-4">
           <div
             className="pos-item px-3 text-center border"
