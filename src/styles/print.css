@@ -1,0 +1,92 @@
+@media print {
+  .print-container {
+    padding: 20px;
+    width: 80mm; /* Standard receipt width */
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility: visible;
+  }
+
+  .print-header {
+    text-align: center;
+    margin-bottom: 20px;
+    visibility: visible;
+  }
+
+  .print-header h2 {
+    margin-bottom: 10px;
+    visibility: visible;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    visibility: visible;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    visibility: visible;
+  }
+
+  .print-footer {
+    margin-top: 20px;
+    text-align: center;
+    visibility: visible;
+  }
+
+  .additional-info {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+    visibility: visible;
+  }
+
+  /* Hide all other content */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Ensure print content is visible */
+  .print-container * {
+    visibility: visible;
+  }
+
+  /* Remove any background colors and shadows for better printing */
+  * {
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Force page breaks */
+  .print-container {
+    page-break-after: always;
+  }
+}
+
+/* Non-print styles to hide the print container during normal viewing */
+@media screen {
+  .print-container {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+}
+
+.print-wrapper {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+@media print {
+  .print-wrapper {
+    position: static;
+    top: auto;
+    left: auto;
+  }
+}
