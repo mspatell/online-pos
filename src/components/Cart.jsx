@@ -1,21 +1,24 @@
 import React from 'react';
-import { ComponentToPrint } from "./ComponentToPrint"; // Import ComponentToPrint
+import { ComponentToPrint } from "./ComponentToPrint";
 
-export const Cart = ({ cart, totalAmount, onRemoveProduct, onAddProduct, onPrint }) => {
-  // Function to calculate subtotal, tax, and final total based on total amount
-  const calculateTotalWithTax = (amount) => {
-    const taxRate = amount <= 4.0 ? 0.05 : 0.13; // Apply 5% tax if amount <= 4, otherwise 13%
-    const taxAmount = amount * taxRate;
-    const finalTotal = amount + taxAmount;
+const TAX_RATES = { LOW: 0.05, HIGH: 0.13 };
+const TAX_THRESHOLD = 4.0;
+
+export const Cart = ({ cart, totalAmount, onRemoveProduct, onPrint }) => {
+  const calculateTotals = (amount) => {
+    const taxRate = amount <= TAX_THRESHOLD ? TAX_RATES.LOW : TAX_RATES.HIGH;
+    const tax = amount * taxRate;
     
     return {
       subtotal: amount,
-      tax: taxAmount,
-      finalTotal: finalTotal
+      tax,
+      finalTotal: amount + tax
     };
   };
 
-  const { subtotal, tax, finalTotal } = calculateTotalWithTax(totalAmount);
+  const { subtotal, tax, finalTotal } = calculateTotals(totalAmount);
+  const taxPercentage = subtotal <= TAX_THRESHOLD ? '5%' : '13%';
+  const hasItems = cart.length > 0;
 
   return (
     <div className="col-lg-6">
@@ -32,41 +35,35 @@ export const Cart = ({ cart, totalAmount, onRemoveProduct, onAddProduct, onPrint
             </tr>
           </thead>
           <tbody>
-            {cart.map((cartProduct, key) => (
-              <tr key={key}>
-                <td>{cartProduct.id}</td>
-                <td>{cartProduct.name}</td>
-                <td>${cartProduct.price}</td>
-                <td>{cartProduct.quantity}</td>
-                <td>${(cartProduct.price * cartProduct.quantity)}</td>
+            {cart.map((item, index) => (
+              <tr key={index}>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>${item.price}</td>
+                <td>{item.quantity}</td>
+                <td>${item.price * item.quantity}</td>
                 <td>
-                  {/* Remove product from cart */}
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => onRemoveProduct(cartProduct)}
+                    onClick={() => onRemoveProduct(item)}
                   >
                     Remove
                   </button>
-                  {/* Add product to cart
-                  <button
-                    className="btn btn-success btn-sm ms-2"
-                    onClick={() => onAddProduct(cartProduct)}
-                  >
-                    +
-                  </button> */}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        
         <div className="px-2 text-white">
           <h3>Subtotal: ${subtotal.toFixed(2)}</h3>
-          <h3>Tax ({subtotal <= 4.0 ? '5%' : '13%'}): ${tax.toFixed(2)}</h3>
+          <h3>Tax ({taxPercentage}): ${tax.toFixed(2)}</h3>
           <h2>Final Total: ${finalTotal.toFixed(2)}</h2>
         </div>
       </div>
+
       <div className="mt-3">
-        {totalAmount !== 0 ? (
+        {hasItems ? (
           <div className="d-flex gap-2">
             <button className="btn btn-primary" onClick={() => window.print()}>
               Print Receipt
@@ -74,10 +71,11 @@ export const Cart = ({ cart, totalAmount, onRemoveProduct, onAddProduct, onPrint
             {onPrint}
           </div>
         ) : (
-          "Please add a product to the cart"
+          <p>Please add a product to the cart</p>
         )}
       </div>
-      {cart.length > 0 && (
+
+      {hasItems && (
         <div className="mt-3">
           <button 
             className="btn btn-danger" 
@@ -85,13 +83,15 @@ export const Cart = ({ cart, totalAmount, onRemoveProduct, onAddProduct, onPrint
           >
             Clear Cart
           </button>
-          <button className="btn btn-success" onClick={() => window.location.href = '/order-queue'}>
-    Place Order
-  </button>
+          <button 
+            className="btn btn-success" 
+            onClick={() => window.location.href = '/order-queue'}
+          >
+            Place Order
+          </button>
         </div>
-      )}      
+      )}
 
-      {/* Pass calculated totals to ComponentToPrint for printing */}
       <ComponentToPrint
         cart={cart}
         totalAmount={totalAmount}
