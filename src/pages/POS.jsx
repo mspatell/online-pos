@@ -1,6 +1,4 @@
-// src/pages/POS.jsx
-
-import { React, useRef }  from "react";
+import React, { useRef } from "react";
 import MainLayout from "../layouts/MainLayout";
 import { useReactToPrint } from "react-to-print";
 import { ComponentToPrint } from "../components/ComponentToPrint";
@@ -23,7 +21,7 @@ function POS() {
     trigger: () => (
       <button 
         className="btn btn-primary"
-        disabled={!cart || cart.length === 0}
+        disabled={cart.length === 0}
       >
         Print Receipt
       </button>
@@ -31,7 +29,7 @@ function POS() {
   });
 
   const handlePrint = () => {
-    if (!cart || cart.length === 0) {
+    if (cart.length === 0) {
       console.error('Cart is empty');
       return;
     }
@@ -58,6 +56,7 @@ function POS() {
             <ProductList products={products} onProductClick={addProductToCart} />
           )}
         </div>
+        
         <div className="print-wrapper">
           <ComponentToPrint
             ref={componentRef}
@@ -65,6 +64,7 @@ function POS() {
             totalAmount={totalAmount}
           />
         </div>
+        
         <Cart
           cart={cart}
           totalAmount={totalAmount}

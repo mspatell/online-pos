@@ -2,29 +2,26 @@ import { useState, useEffect } from 'react';
 import { addToCart, removeFromCart, calculateTotalAmount } from '../services/addToCart';
 import { toast } from 'react-toastify';
 
+const TOAST_OPTIONS = {
+  autoClose: 400,
+  pauseOnHover: true,
+};
+
 export const useCart = () => {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const toastOptions = {
-    autoClose: 400,
-    pauseOnHover: true,
-  };
-
   const addProductToCart = (product) => {
-    const newCart = addToCart(cart, product);
-    setCart(newCart);
-    toast(`Added ${product.name} to cart`, toastOptions);
+    setCart(prevCart => addToCart(prevCart, product));
+    toast(`Added ${product.name} to cart`, TOAST_OPTIONS);
   };
 
   const removeProduct = (product) => {
-    const newCart = removeFromCart(cart, product.id);
-    setCart(newCart);
+    setCart(prevCart => removeFromCart(prevCart, product.id));
   };
 
   useEffect(() => {
-    const newTotalAmount = calculateTotalAmount(cart);
-    setTotalAmount(newTotalAmount);
+    setTotalAmount(calculateTotalAmount(cart));
   }, [cart]);
 
   return { cart, totalAmount, addProductToCart, removeProduct };
