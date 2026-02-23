@@ -1,11 +1,11 @@
-# Use an official Node.js image as the base
-FROM node:20-alpine
+# Use Node.js 22 to meet json-server requirements
+FROM node:22-alpine
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and yarn.lock first for efficient caching
-COPY package.json yarn.lock ./
+# Copy package.json first
+COPY package.json ./
 
 # Install dependencies
 RUN yarn install
@@ -14,10 +14,11 @@ RUN yarn install
 COPY . .
 
 # Expose ports used by json-server and the app
-EXPOSE 8000 3000
+EXPOSE 3000
+EXPOSE ${JSON_SERVER_PORT:-8000}
 
-# Define environment variables if needed (e.g., NODE_ENV)
-ENV NODE_ENV production
+# Make start script executable
+RUN chmod +x start.sh
 
 # Start both servers
-CMD ["sh", "-c", "yarn server & yarn start"]
+CMD ["./start.sh"]
